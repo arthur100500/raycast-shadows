@@ -98,7 +98,7 @@ namespace Engine.Light
             Shader = new(standart_vert, standart_frag, 0);
             var _fbo_sh = new Shader(standart_vert, fbo_frag, 0);
             _fbo_sh.SetInt("texture1", 1);
-            fbo.Sprite.SetShader(_fbo_sh);
+            fbo.Sprite?.SetShader(_fbo_sh);
 
             _vao = GL.GenVertexArray();
             GL.BindVertexArray(_vao);
@@ -187,7 +187,7 @@ namespace Engine.Light
             fbo.Stop();
             GL.Viewport(0, 0, 800, 800);
 
-            worldfboMask.Texture.Use(TextureUnit.Texture1);
+            worldfboMask.Texture?.Use(TextureUnit.Texture1);
 
             worldfbo.Render();
             GL.BlendFunc(BlendingFactor.DstColor, BlendingFactor.Zero);
