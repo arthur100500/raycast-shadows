@@ -8,9 +8,6 @@ namespace LightDemo
     {
         private IScene _currentScene;
         private Window _window;
-
-        private FrameBuffer fbo;
-
         public Game()
         {
             _window = Window.Create(800, 800, "");
@@ -48,8 +45,6 @@ namespace LightDemo
 
         private void LoadEvent()
         {
-            fbo = new FrameBuffer();
-
             _currentScene.Load();
         }
 
