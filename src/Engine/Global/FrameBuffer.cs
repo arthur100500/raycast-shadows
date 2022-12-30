@@ -7,8 +7,8 @@ namespace Engine
     public class FrameBuffer
     {
         private int FBO;
-        public Sprite Sprite;
-        public Texture Texture;
+        public Sprite? Sprite;
+        public Texture? Texture;
         private Camera _blancCam = new();
 
         public void Load(iPos screen_resolution)
@@ -80,12 +80,19 @@ namespace Engine
 
         public void ResizeToFullscreen()
         {
+            if (Sprite is null)
+            {
+                throw new Exception("Framebuffer must be loaded before resize");
+            }
             Sprite.quad.ReshapeWithCoords(-Misc.fbo_sprite_coords.X, Misc.fbo_sprite_coords.Y, 1, -1);
         }
 
         public void Resize(iPos screen_resolution)
         {
-
+            if (Texture is null)
+            {
+                throw new Exception("Framebuffer must be loaded before resize");
+            }
             // Bind the handle
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, Texture.Handle);
@@ -103,6 +110,10 @@ namespace Engine
 
         public void Render()
         {
+            if (Sprite is null)
+            {
+                throw new Exception("Framebuffer must be loaded before resize");
+            }
             Sprite.Render(_blancCam);
         }
     }
