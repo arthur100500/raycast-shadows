@@ -221,6 +221,9 @@ namespace Engine
 
         public void ReshapeVertexArray(BaseObject obj)
         {
+            if (obj.center is null)
+                return;
+
             centre = obj.center;
 
             rad = (float)Math.Sqrt(obj.width * obj.width + obj.height * obj.height);
