@@ -33,7 +33,7 @@ namespace Engine
             return new iPos(obj1.X + obj2.X, obj1.Y + obj2.Y);
         }
 
-        public static iPos operator *(iPos obj1, int another)
+        public static iPos? operator *(iPos obj1, int another)
         {
             if (obj1 is null)
                 return null;
@@ -138,7 +138,7 @@ namespace Engine
             Y += another.Y;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(this, obj))
             {

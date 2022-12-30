@@ -3,9 +3,9 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Engine
 {
-	internal static class LightShaders
-	{
-		internal static string textureGen = @"
+    internal static class LightShaders
+    {
+        internal static string textureGen = @"
 			#version 430
 			layout(local_size_x = 1, local_size_y = 1) in;
 			layout(rgba32f, location = 0) uniform image2D light_map;
@@ -23,7 +23,7 @@ namespace Engine
 				imageStore(light_map, pixel_coords, vec4(color.rgb * d * d, d));
 			}";
 
-		internal static string normalTextureGen = @"
+        internal static string normalTextureGen = @"
 			#version 430
 			layout(local_size_x = 1, local_size_y = 1) in;
 			layout(rgba32f, location = 0) uniform image2D light_map;
@@ -43,7 +43,7 @@ namespace Engine
 				imageStore(light_map, pixel_coords, vec4(r, g, b, 1.0));
 			}";
 
-		internal static string lightRendererCode = @"
+        internal static string lightRendererCode = @"
 		#version 330
 		out vec4 outputColor;
 		in vec2 texCoord;
@@ -98,38 +98,38 @@ namespace Engine
 			outputColor = count_light(diffuse, normal, light, transformedTexCoord);
 		}";
 
-		internal static Shader lightRenderer = new Shader(StandartShaders.standart_vert, lightRendererCode, 0);
-		internal static Shader spotLightFiller = CreateShader(textureGen);
-		internal static Shader spotLightNormalFiller = CreateShader(normalTextureGen);
+        internal static Shader lightRenderer = new Shader(StandartShaders.standart_vert, lightRendererCode, 0);
+        internal static Shader spotLightFiller = CreateShader(textureGen);
+        internal static Shader spotLightNormalFiller = CreateShader(normalTextureGen);
 
-		private static Shader CreateShader(string shader_origin)
-		{
-			int light_generator_id;
-			var light_generator_shader = GL.CreateShader(ShaderType.ComputeShader);
-			GL.ShaderSource(light_generator_shader, shader_origin);
+        private static Shader CreateShader(string shader_origin)
+        {
+            int light_generator_id;
+            var light_generator_shader = GL.CreateShader(ShaderType.ComputeShader);
+            GL.ShaderSource(light_generator_shader, shader_origin);
 
-			GL.CompileShader(light_generator_shader);
-			GL.GetShader(light_generator_shader, ShaderParameter.CompileStatus, out var code);
-			if (code != (int) All.True)
-			{
-				var infoLog = GL.GetShaderInfoLog(light_generator_shader);
-				Misc.PrintShaderError(shader_origin, infoLog);
-				throw new Exception($"Error occurred whilst compiling Shader({light_generator_shader}).\n\n{infoLog}");
-			}
+            GL.CompileShader(light_generator_shader);
+            GL.GetShader(light_generator_shader, ShaderParameter.CompileStatus, out var code);
+            if (code != (int)All.True)
+            {
+                var infoLog = GL.GetShaderInfoLog(light_generator_shader);
+                Misc.PrintShaderError(shader_origin, infoLog);
+                throw new Exception($"Error occurred whilst compiling Shader({light_generator_shader}).\n\n{infoLog}");
+            }
 
-			light_generator_id = GL.CreateProgram();
-			GL.AttachShader(light_generator_id, light_generator_shader);
-			GL.LinkProgram(light_generator_id);
-			GL.GetProgram(light_generator_id, GetProgramParameterName.LinkStatus, out var c2ode);
-			if (c2ode != (int) All.True)
-				throw new Exception($"Error occurred whilst linking Program({light_generator_id})");
+            light_generator_id = GL.CreateProgram();
+            GL.AttachShader(light_generator_id, light_generator_shader);
+            GL.LinkProgram(light_generator_id);
+            GL.GetProgram(light_generator_id, GetProgramParameterName.LinkStatus, out var c2ode);
+            if (c2ode != (int)All.True)
+                throw new Exception($"Error occurred whilst linking Program({light_generator_id})");
 
-			GL.DetachShader(light_generator_id, light_generator_shader);
-			GL.DeleteShader(light_generator_shader);
+            GL.DetachShader(light_generator_id, light_generator_shader);
+            GL.DeleteShader(light_generator_shader);
 
-			var to_return = new Shader(light_generator_id);
+            var to_return = new Shader(light_generator_id);
 
-			return to_return;
-		}
-	}
+            return to_return;
+        }
+    }
 }
