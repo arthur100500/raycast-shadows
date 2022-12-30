@@ -5,9 +5,9 @@ namespace Engine
     public abstract class BaseObject : IRenderable
     {
         /// <summary>
-        ///  Centre of the object
+        ///  Center of the object
         /// </summary>
-        public Pos centre;
+        public Pos center;
 
         /// <summary>
         ///  Height of the object (in initial position, not rotated)
