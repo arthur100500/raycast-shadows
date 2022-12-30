@@ -30,6 +30,12 @@ namespace Engine
         // Refresh rate of FixedUpdate func (every N ms) (Standart 250hz)
         public double fixed_time_update_rate = 0.004;
 
+        public event UpdateFrameDelegate? Update;
+        public event UpdateFrameDelegate? FixedUpdate;
+        public event RenderFrameDelegate? Render;
+        public new event OnLoadDelegate? Load;
+        public new event OnResizeDelegate? Resize;
+
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(
             gameWindowSettings, nativeWindowSettings)
         {
@@ -37,12 +43,6 @@ namespace Engine
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
         }
-
-        public event UpdateFrameDelegate Update;
-        public event UpdateFrameDelegate FixedUpdate;
-        public event RenderFrameDelegate Render;
-        public event OnLoadDelegate Load;
-        public event OnResizeDelegate Resize;
 
         /// <summary>
         ///  Window constructer
@@ -104,6 +104,12 @@ namespace Engine
         {
             base.OnUpdateFrame(e);
 
+            if (Misc.window is null)
+            {
+                Update?.Invoke();
+                return;
+            }
+
             Controls.mouse = MouseState;
             Controls.keyboard = KeyboardState;
 
@@ -153,12 +159,6 @@ namespace Engine
 
             // Resize delegate
             Resize?.Invoke();
-        }
-
-        protected override void OnClosed()
-        {
-            base.OnClosed();
-            Environment.Exit(0);
         }
     }
 }
