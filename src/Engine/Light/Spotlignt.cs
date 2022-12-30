@@ -58,7 +58,7 @@ namespace Engine.Light
 
             Array.Sort(rayCastAngles);
             List<Pos> intersections = new();
-            Pos closest;
+            Pos? closest;
             float closestLen = 10000f;
             float currentLen;
             int lastVertexIndex = 0;
@@ -139,6 +139,11 @@ namespace Engine.Light
                         vertecies[lastVertexIndex++] = Color[j];
 
                     // Corner2 X Y tX tY
+                    if (closest is null)
+                    {
+                        throw new Exception("Error with the vertex count");
+                    }
+
                     vertecies[lastVertexIndex++] = closest.X;
                     vertecies[lastVertexIndex++] = closest.Y;
                     vertecies[lastVertexIndex++] = 0;
