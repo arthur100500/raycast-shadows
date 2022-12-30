@@ -8,7 +8,7 @@ namespace Engine
         /// <summary>
         ///  Global window object
         /// </summary>
-        public static Window window;
+        public static Window? window;
 
         /// <summary>
         ///  Width and height of framebuffer to be rendered
@@ -54,7 +54,7 @@ namespace Engine
             return (float)Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
         }
 
-        public static string str(object arg)
+        public static string? str(object arg)
         {
             return Convert.ToString(arg);
         }
