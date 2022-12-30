@@ -164,7 +164,7 @@ namespace Engine
             {
                 return _uniformLocations[name];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return -1;
             }
