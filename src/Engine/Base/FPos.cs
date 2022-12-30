@@ -60,6 +60,31 @@ namespace Engine
         {
             return new iPos((int)Math.Floor(v.X), (int)Math.Floor(v.Y));
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            if (obj.GetType() != typeof(iPos))
+            {
+                return false;
+            }
+
+            return ((iPos)obj).X == this.X && ((iPos)obj).Y == this.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     /// <summary>
@@ -150,7 +175,17 @@ namespace Engine
                 return false;
             }
 
-            throw new NotImplementedException();
+            if (obj.GetType() != typeof(Pos))
+            {
+                return false;
+            }
+
+            return ((Pos)obj).X == this.X && ((Pos)obj).Y == this.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

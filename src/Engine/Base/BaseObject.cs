@@ -7,7 +7,7 @@ namespace Engine
         /// <summary>
         ///  Center of the object
         /// </summary>
-        public Pos center;
+        public Pos? center;
 
         /// <summary>
         ///  Height of the object (in initial position, not rotated)
